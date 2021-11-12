@@ -18,7 +18,7 @@ Resources:
       Description: "Sample layer description"
       ContentUri: sample-layer
       CompatibleRuntimes:
-        - java8
+        - java11
       LicenseInfo: 'MIT'
       RetentionPolicy: Retain
     Metadata:
@@ -29,7 +29,7 @@ Resources:
     Properties:
       CodeUri: HelloWorldFunction
       Handler: helloworld.App::handleRequest
-      Runtime: java8
+      Runtime: java11
       MemorySize: 512
       Layers:
         - !Ref SampleLayer
