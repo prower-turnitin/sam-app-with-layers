@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "sam-app-with-layers"
+s3_bucket = "tra-sam-deployment"
+s3_prefix = "my-sam-app-with-layers"
+region = "us-east-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
