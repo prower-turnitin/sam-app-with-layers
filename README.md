@@ -1,4 +1,4 @@
-# sam-app-with-layers
+# Issue Publishing this app sam-app-with-layers to AWS Serverless Application Repository
 
 This projects shows up SAM issue related to publishing SAM application into Serverless Application Repository.  I followed the instructions found in [AWS Serverless Application Model Developers Guide Publishing](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-publishing-applications.html).  If I build and deploy this project
 using SAM cli then publish it to AWS Serverless Application Repository the code artifacts won't be existing in the SAR application.  You can
