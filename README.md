@@ -123,10 +123,40 @@ aws s3api get-object --bucket aws-sam-cli-managed-default-samclisourcebucket-dm0
 publication version.
 
 ```shell
+aws serverlessrepo delete-application --application-id arn:aws:serverlessrepo:us-east-2:431036401867:applications/SamAppWithLayers
 sam publish --template publish.yaml --region us-east-2
 ```
 
-## List of issues found while trying to find a work around:
+#### Output Publish
+```shell
+phillipr@es-admins-MBP-2 sam-app-with-layers % sam publish --template publish.yaml --region us-east-2
+Publish Succeeded
+Created new application with the following metadata:
+{
+  "Name": "SamAppWithLayers",
+  "Author": "Phillip Rower",
+  "Description": "Demonstrates and documents using SAM with Serverless Application Repository",
+  "ReadmeUrl": "s3://aws-sam-cli-managed-default-samclisourcebucket-dm05a8pfwg2j/sam-app-with-layers/ded2bfd58767e0470bdfcfa78ddf9607",
+  "SemanticVersion": "1.0.0",
+  "SourceCodeUrl": "https://github.com/prower-turnitin/sam-app-with-layers"
+}
+Click the link below to view your application in AWS console:
+https://console.aws.amazon.com/serverlessrepo/home?region=us-east-2#/published-applications/arn:aws:serverlessrepo:us-east-2:431036401867:applications~SamAppWithLayers
+
+```
+
+14. Repeat deployment steps starting at 1 to deploy application from Serverless Application Repository this time it will work, but 
+first delete the old corrupted stack from the bad publish.
+```shell
+aws cloudformation delete-stack --stack-name deploy-sam-app-with-layers-from-sar
+aws serverlessrepo create-cloud-formation-change-set \
+--application-id arn:aws:serverlessrepo:us-east-2:431036401867:applications/SamAppWithLayers \
+--stack-name deploy-sam-app-with-layers-from-sar \
+--capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+```
+
+
+## List of other issues found while trying to find a work around:
 I found few different issues when attempting to publish this project to SAR.  
 
 1. `sam deploy --guided --s3-bucket tra-sam-deployment --s3-prefix sam-app-with-layers` will not use my bucket or prefix:
