@@ -4,6 +4,19 @@ This projects shows up SAM issue related to publishing SAM application into Serv
 using SAM cli then publish it to AWS Serverless Application Repository the code artifacts won't be existing in the SAR application.  You can
 deploy that application via any means it will not work properly since it doesn't have the appropriate code assets.
 
+Gist of the reason for this is same `template.yaml` used by `sam deploy --guided` can't be used successfully by `sam package`.
+In this example SAM project Maven pom.xml files aren't configuring the deployment artifacts instead `sam deploy --guided` is building these artifacts.
+One could use Maven Assembly Plugin to build the appropriate zip file, but why should both SAM cli and Maven do this packaging.
+Notice the `template.yaml` ContentUri wouldn't be the same if you tried to use both SAM and Maven to package the assets.  
+Features like `sam sync` and `sam deploy --guided` would need different configuration in `template.yaml` than required for a
+`template.yaml` where Maven or Gradle packaged the Java assets.  Personally it makes sense to me for Java SAM projects to just use 
+SAM cli to do the packaging.  
+One option to resolve this would be to add an option feature to `sam build --guided` like --output-template-file to get the resolved
+version of the SAM template.yaml.  
+Another would be to keep copy of last resolved template in the hidden `.aws-sam` folder, which could be used with the 
+`sam publish` command.  I also found list of issue when trying to discover a solution to this issue such as the
+s3 bucket override doesn't work too with `sam deploy --guided` command.
+
 ## SAM CLI version
 ```shell
 phillipr@es-admins-MBP-2 sam-app-with-layers % sam --version
