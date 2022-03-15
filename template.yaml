@@ -10,6 +10,15 @@ Globals:
   Function:
     Timeout: 20
 
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: SamAppWithLayers
+    Author: Phillip Rower
+    Description: Demonstrates and documents using SAM with Serverless Application Repository
+    ReadmeUrl: README.md
+    SemanticVersion: 1.0.0
+    SourceCodeUrl: https://github.com/prower-turnitin/sam-app-with-layers
+
 Resources:
   SampleLayer:
     Type: AWS::Serverless::LayerVersion
