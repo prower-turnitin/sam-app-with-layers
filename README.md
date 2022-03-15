@@ -71,7 +71,7 @@ sam build
 sam deploy --guided --config-file mysamconfig.toml
 ```
 
-[Console Logs](samDeployLogs2.mdm)
+[Console Logs](samDeployLogs2.md)
 
 After running this command it updates mysamconfig.toml changing bucket to the default.
 
@@ -97,6 +97,27 @@ phillipr@es-admins-MBP-2 sam-app-with-layers % aws s3 ls s3://tra-sam-deployment
 phillipr@es-admins-MBP-2 sam-app-with-layers % 
 
 ````
+
+Still can't get it to use my bucket.  
+
+3. I told it to save results of any config changes which I made none but I'll try again answering No for that question this time.
+
+```shell
+sam build
+sam deploy --guided --config-file mysamconfig.toml
+```
+
+[Console Logs](samDeployLogs2.md)
+
+Answering No on saving config file does as expected and doesn't change my `mysamconfig.toml` file.  
+Unfortunately it still does use my bucket or path contained in `mysamconfig.toml` and still uses the default.
+
+```shell
+phillipr@es-admins-MBP-2 sam-app-with-layers % aws s3 ls s3://tra-sam-deployment/my-sam-app-with-layers
+phillipr@es-admins-MBP-2 sam-app-with-layers % 
+
+```
+
 
 ## How to fix it?
 
