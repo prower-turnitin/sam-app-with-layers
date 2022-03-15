@@ -4,6 +4,13 @@ This projects shows up SAM issue related to publishing SAM application into Serv
 few different issues when attempting to publish this project to SAR.  One issue I found is overriding s3 bucket and prefix via
 command line parameters doesn't work. Overriding which 
 
+## SAM CLI version
+```shell
+phillipr@es-admins-MBP-2 sam-app-with-layers % sam --version
+SAM CLI, version 1.40.1
+
+```
+
 ## List of issues found:
 
 1. `sam deploy --guided --s3-bucket tra-sam-deployment --s3-prefix sam-app-with-layers` will not use my bucket or prefix:
@@ -13,7 +20,7 @@ sam build
 sam deploy --guided --s3-bucket tra-sam-deployment --s3-prefix my-sam-app-with-layers
 ``` 
 
-[Terminal Log for sam deploy](samDeployLogs.md)
+[Console Log for sam deploy](samDeployLogs.md)
 
 The above `sam deploy` won't use my bucket.  Below is contents of default samconfig.toml created by the above `sam deploy --guided --s3-bucket tra-sam-deployment --s3-prefix my-sam-app-with-layers`.  Notice how it doesn't use my bucket or prefix.
 
@@ -58,6 +65,38 @@ confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
 ```
+
+```shell
+sam build
+sam deploy --guided --config-file mysamconfig.toml
+```
+
+[Console Logs](samDeployLogs2.mdm)
+
+After running this command it updates mysamconfig.toml changing bucket to the default.
+
+#### mysamconfig.toml after running "sam deploy --guided --config-file mysamconfig.toml"
+```toml
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "sam-app-with-layers"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-dm05a8pfwg2j"
+s3_prefix = "sam-app-with-layers"
+region = "us-east-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+```
+
+Ok, lets list the object contents of that s3 bucket and path.  There is nothing there again.
+
+```shell
+phillipr@es-admins-MBP-2 sam-app-with-layers % aws s3 ls s3://tra-sam-deployment/my-sam-app-with-layers
+phillipr@es-admins-MBP-2 sam-app-with-layers % 
+
+````
 
 ## How to fix it?
 
