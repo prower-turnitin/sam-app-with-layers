@@ -153,7 +153,13 @@ aws serverlessrepo create-cloud-formation-change-set \
 --application-id arn:aws:serverlessrepo:us-east-2:431036401867:applications/SamAppWithLayers \
 --stack-name deploy-sam-app-with-layers-from-sar \
 --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+aws cloudformation execute-change-set \
+--change-set-name arn:aws:cloudformation:us-east-2:431036401867:changeSet/a0e6c1817-f868-47a2-ba18-7ec511c52c03/51bbaef7-9642-4ca0-95e0-f6c3f8d82f34
+aws cloudformation describe-change-set --change-set-name arn:aws:cloudformation:us-east-2:431036401867:changeSet/a0e6c1817-f868-47a2-ba18-7ec511c52c03/51bbaef7-9642-4ca0-95e0-f6c3f8d82f34
+aws cloudformation describe-stacks --stack-name serverlessrepo-deploy-sam-app-with-layers-from-sar
 ```
+
+Hit stack URL found in Output HelloWorldApi and you should get successful 200 result.
 
 
 ## List of other issues found while trying to find a work around:
