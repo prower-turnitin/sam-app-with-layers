@@ -283,10 +283,3 @@ phillipr@es-admins-MBP-2 sam-app-with-layers %
 
 ```
 
-
-## How to fix it?
-
-1. `sam build SampleLayer` to build layer first and make it available on local maven repository
-
-1. `sam build` to build others project resources
-
