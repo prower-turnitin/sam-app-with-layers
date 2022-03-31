@@ -283,3 +283,44 @@ phillipr@es-admins-MBP-2 sam-app-with-layers %
 
 ```
 
+
+### Alternative instructions
+```shell
+export SAM_CLI_BETA_MAVEN_SCOPE_AND_LAYER=1 
+sam build
+sam package --output-template-file packaged.yaml --s3-bucket tra-sam-deployment --s3-prefix sam-app-with-layers
+sam publish --template packaged.yaml --region us-east-2
+```
+
+```shell
+aws serverlessrepo create-cloud-formation-change-set \
+--application-id arn:aws:serverlessrepo:us-east-2:431036401867:applications/SamAppWithLayers \
+--stack-name deploy-sam-app-with-layers-from-sar-2 \
+--capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+```
+
+#### result
+```json
+{
+    "ApplicationId": "arn:aws:serverlessrepo:us-east-2:431036401867:applications/SamAppWithLayers",
+    "ChangeSetId": "arn:aws:cloudformation:us-east-2:431036401867:changeSet/a5cb54392-108f-4e1a-bc91-61f8ee091184/5dae47b2-b561-4cf9-840a-a7b0e2a6eca2",
+    "SemanticVersion": "1.0.1",
+    "StackId": "arn:aws:cloudformation:us-east-2:431036401867:stack/serverlessrepo-deploy-sam-app-with-layers-from-sar-2/a22c13f0-b115-11ec-a6fc-0a6638343364"
+}
+
+```
+
+
+```shell
+aws cloudformation execute-change-set \
+--change-set-name arn:aws:cloudformation:us-east-2:431036401867:changeSet/a5cb54392-108f-4e1a-bc91-61f8ee091184/5dae47b2-b561-4cf9-840a-a7b0e2a6eca2
+```
+
+#### Display and grab artifacts
+```shell
+aws s3 ls s3://tra-sam-deployment/sam-app-with-layers/7c0ad793a397a526b45a92a615808a16
+aws --no-cli-pager s3api list-objects-v2 --bucket tra-sam-deployment --prefix sam-app-with-layers
+aws --no-cli-pager s3api list-objects-v2 --bucket tra-sam-deployment --prefix sam-app-with-layers/7c0ad793a397a526b45a92a615808a16
+aws s3api get-object --bucket tra-sam-deployment --key sam-app-with-layers/7c0ad793a397a526b45a92a615808a16 helloWorld.zip
+s3://tra-sam-deployment/sam-app-with-layers/7c0ad793a397a526b45a92a615808a16
+```

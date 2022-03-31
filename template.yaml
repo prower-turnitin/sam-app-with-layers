@@ -16,7 +16,7 @@ Metadata:
     Author: Phillip Rower
     Description: Demonstrates and documents using SAM with Serverless Application Repository
     ReadmeUrl: README.md
-    SemanticVersion: 1.0.0
+    SemanticVersion: 1.0.1
     SourceCodeUrl: https://github.com/prower-turnitin/sam-app-with-layers
 
 Resources:
